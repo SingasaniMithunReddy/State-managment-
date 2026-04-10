@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Frontend Platform | Case Study</title>
+  <meta name="description" content="A portfolio-style system design case study for a generic enterprise micro-frontend platform." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#top" class="brand">Enterprise Frontend Platform</a>
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#impact">Impact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Portfolio Case Study</span>
+          <h1>Building a scalable micro-frontend platform for enterprise web products</h1>
+          <p class="lead">
+            This project presents a generic frontend platform designed to support multiple web applications through shared state management,
+            event-driven communication, reusable UI foundations, secure third-party integrations, and safe delivery practices.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#architecture">Explore architecture</a>
+            <a class="btn btn-secondary" href="#impact">See outcomes</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="metric-grid">
+            <div class="metric"><strong>Micro-frontends</strong><span>Independent features with shared platform patterns</span></div>
+            <div class="metric"><strong>Reactive state</strong><span>Central store with push-based updates</span></div>
+            <div class="metric"><strong>Event hub</strong><span>Typed analytics, errors, and navigation events</span></div>
+            <div class="metric"><strong>Safe rollout</strong><span>Flags, canaries, observability, and rollback</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container narrow">
+        <span class="section-label">Overview</span>
+        <h2>The problem</h2>
+        <p>
+          Enterprise teams often need to move quickly across many web applications while maintaining consistency, reliability, accessibility,
+          and governance. As products scale, frontend teams typically struggle with duplicated state logic, inconsistent routing, fragmented
+          telemetry, and one-off integrations that are difficult to maintain.
+        </p>
+        <p>
+          This platform addresses those issues by introducing a common foundation for state, events, UI composition, external integrations,
+          testing, release controls, and operational visibility across independently delivered applications.
+        </p>
+      </div>
+    </section>
+
+    <section id="architecture" class="section alt">
+      <div class="container">
+        <span class="section-label">Architecture</span>
+        <h2>System design at a glance</h2>
+        <div class="diagram-card">
+<pre class="diagram"><code>┌────────────────────────────────────────────────────────────┐
+│                    Shell / Driver App                      │
+│   routing • auth/session • config • observability hooks   │
+└───────────────┬───────────────────────────────┬────────────┘
+                │                               │
+        ┌───────▼────────┐              ┌───────▼────────┐
+        │ Micro App A    │              │ Micro App B    │
+        │ feature domain │              │ feature domain │
+        └───────┬────────┘              └───────┬────────┘
+                │                               │
+        ┌───────▼───────────────────────────────▼──────────┐
+        │              Shared Frontend Platform            │
+        │  state store • reactive signals • event hub      │
+        │  navigation • analytics • errors • design system │
+        └───────┬───────────────────────────────┬──────────┘
+                │                               │
+      ┌─────────▼─────────┐           ┌────────▼──────────┐
+      │ Backend APIs      │           │ External Provider │
+      │ tokens • data     │           │ iframe + callback │
+      └───────────────────┘           └───────────────────┘</code></pre>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Centralized state</h3>
+            <p>A shared store acts as the source of truth for initialization, reads, writes, clearing state, and subscription to changes.</p>
+          </article>
+          <article class="card">
+            <h3>Reactive updates</h3>
+            <p>Push-based reactive patterns simplify change detection and help newly loaded applications hydrate instantly.</p>
+          </article>
+          <article class="card">
+            <h3>Governed event model</h3>
+            <p>Typed events standardize analytics, exceptions, and navigation while reducing coupling between teams.</p>
+          </article>
+          <article class="card">
+            <h3>Composable UI platform</h3>
+            <p>A shared design system provides accessible, versioned components and consistent tokens for theming.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities" class="section">
+      <div class="container">
+        <span class="section-label">Core capabilities</span>
+        <h2>What the platform delivers</h2>
+        <div class="capability-list">
+          <article>
+            <h3>1. Shared state and cross-app communication</h3>
+            <p>
+              A central state store supports application lifecycle concerns such as initialization, reading, writing, clearing, and listening to state changes.
+              A typed event hub enables publish/subscribe patterns for analytics, error handling, and deep-link-friendly navigation.
+            </p>
+          </article>
+          <article>
+            <h3>2. External provider integration</h3>
+            <p>
+              Third-party account-linking flows are embedded in a micro-frontend through an iframe pattern with server-issued short-lived tokens,
+              callback handling, consent persistence, idempotent upserts, and recovery handling for errors or partial completion.
+            </p>
+          </article>
+          <article>
+            <h3>3. Reliability and safe delivery</h3>
+            <p>
+              The platform includes retries, backoff, circuit breakers, rate-limit guardrails, background reconciliation, signed webhooks,
+              replay support, dead letter handling, feature flags, and canary releases.
+            </p>
+          </article>
+          <article>
+            <h3>4. Design system and governance</h3>
+            <p>
+              A reusable UI component library supports theme tokens, accessibility standards, semantic versioning, contribution rules,
+              migration guidance, and adoption telemetry across teams.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <span class="section-label">Engineering focus</span>
+        <h2>How quality was built in</h2>
+        <div class="card-grid four-up">
+          <article class="card"><h3>Security</h3><p>Least-privilege tokens, secret rotation, CSP policies, and masking of sensitive data.</p></article>
+          <article class="card"><h3>Observability</h3><p>Correlated logs, dashboards, alerts, governed event schemas, and telemetry for adoption.</p></article>
+          <article class="card"><h3>Accessibility</h3><p>WCAG 2.1 AA patterns, accessible layouts, keyboard support, and automated checks.</p></article>
+          <article class="card"><h3>Testing</h3><p>Unit, end-to-end, contract, accessibility, and visual regression coverage with release controls.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact" class="section">
+      <div class="container narrow">
+        <span class="section-label">Portfolio framing</span>
+        <h2>Interview-ready outcomes</h2>
+        <ul class="impact-list">
+          <li>Created a reusable frontend foundation for multiple independently delivered applications.</li>
+          <li>Reduced coupling by standardizing state, navigation, analytics, and exception handling patterns.</li>
+          <li>Improved platform consistency through shared UI components, governance, and migration guidance.</li>
+          <li>Enabled safer releases through feature flags, canaries, contract tests, and fast rollback strategies.</li>
+          <li>Strengthened operational maturity with dashboards, alerts, replay handling, and event schema governance.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p>Generic enterprise micro-frontend platform case study</p>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">Toggle theme</button>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
