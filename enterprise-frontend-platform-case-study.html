@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Enterprise micro-frontend platform case study: centralized state, governed events, external provider integration, design systems, observability, and safe rollout patterns." />
+  <title>Enterprise Frontend Platform Case Study</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-2: #0d1728;
+      --panel: rgba(14, 24, 42, 0.76);
+      --panel-strong: #0f1b31;
+      --text: #edf3ff;
+      --muted: #a8b6d3;
+      --line: rgba(162, 184, 223, 0.18);
+      --accent: #7dd3fc;
+      --accent-2: #a7f3d0;
+      --accent-3: #c4b5fd;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 24px;
+      --radius-sm: 18px;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(125,211,252,.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(196,181,253,.14), transparent 28%),
+        linear-gradient(180deg, #07111f 0%, #0b1423 55%, #09111d 100%);
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 24px; }
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 17, 31, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 14px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    }
+    .brand { font-weight: 700; letter-spacing: .02em; }
+    .brand small { color: var(--muted); font-weight: 500; margin-left: 10px; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: .96rem; }
+    .nav-links a:hover { color: var(--text); }
+    .hero {
+      padding: 72px 24px 36px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .hero-card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-card { padding: 34px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding: 8px 12px; border-radius: 999px;
+      color: var(--accent); font-size: .9rem; margin-bottom: 18px;
+    }
+    h1, h2, h3 { line-height: 1.12; margin: 0; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); letter-spacing: -0.04em; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin-bottom: 14px; }
+    h3 { font-size: 1.05rem; margin-bottom: 10px; }
+    p { color: var(--muted); margin: 0; }
+    .lead { font-size: 1.08rem; max-width: 60ch; margin-top: 16px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
+    .button {
+      display: inline-block; text-decoration: none; font-weight: 700;
+      border-radius: 14px; padding: 12px 16px;
+      border: 1px solid transparent;
+    }
+    .button.primary { background: linear-gradient(135deg, var(--accent), #93c5fd); color: #07111f; }
+    .button.secondary { border-color: var(--line); color: var(--text); background: rgba(255,255,255,.03); }
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 22px;
+    }
+    .stat {
+      padding: 18px; border-radius: 20px; background: rgba(255,255,255,.03); border: 1px solid var(--line);
+    }
+    .stat .num { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; }
+    .stat p { font-size: .95rem; }
+    .section { padding: 22px 24px 10px; }
+    .section-head {
+      display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px;
+    }
+    .section-head p { max-width: 62ch; }
+    .kicker { color: var(--accent-2); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; font-weight: 700; margin-bottom: 10px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 22px;
+      min-height: 100%;
+    }
+    .card ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); }
+    .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .pill {
+      padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(125,211,252,.08); color: #dff4ff; font-size: .9rem;
+    }
+    .timeline { display: grid; gap: 16px; }
+    .step {
+      display: grid; grid-template-columns: 58px 1fr; gap: 16px; align-items: start;
+      padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.025);
+    }
+    .step .index {
+      width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+      font-weight: 800; color: #07111f; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    pre {
+      margin: 0; overflow-x: auto; white-space: pre; padding: 22px;
+      border-radius: 20px; border: 1px solid var(--line);
+      background: #081221; color: #dbeafe;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .92rem; line-height: 1.55;
+    }
+    .quote {
+      padding: 22px; border-left: 3px solid var(--accent);
+      background: rgba(255,255,255,.025); border-radius: 0 18px 18px 0; color: var(--muted);
+    }
+    .footer {
+      padding: 36px 24px 70px; color: #8ea0c4; font-size: .94rem;
+    }
+    @media (max-width: 980px) {
+      .hero-grid, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: start; }
+    }
+    @media (max-width: 640px) {
+      .wrap, .nav-inner { padding-left: 16px; padding-right: 16px; }
+      .hero { padding-top: 40px; }
+      .hero-card { padding: 24px; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">Enterprise Frontend Platform <small>Case study / portfolio page</small></div>
+      <nav class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#decisions">Decisions</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#impact">Impact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">Interview-ready system design portfolio</div>
+          <h1>Built a scalable micro-frontend platform for enterprise product teams.</h1>
+          <p class="lead">
+            This case study presents a production-grade frontend platform centered on centralized state, governed eventing,
+            external-provider integration, reusable UI foundations, and safe release patterns. It is written to feel like a real
+            product landing page while still showing architecture depth for interviews and GitHub portfolios.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Micro-frontends</span>
+            <span class="pill">Reactive state</span>
+            <span class="pill">Typed events</span>
+            <span class="pill">Provider integration</span>
+            <span class="pill">Design system</span>
+            <span class="pill">Accessibility</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button primary" href="#architecture">View architecture</a>
+            <a class="button secondary" href="#delivery">See delivery model</a>
+          </div>
+        </div>
+
+        <aside class="panel stat-grid" aria-label="Key highlights">
+          <div class="stat">
+            <div class="num">1</div>
+            <p>Shared application state source of truth across shell and micro-apps</p>
+          </div>
+          <div class="stat">
+            <div class="num">3</div>
+            <p>Core event lanes for telemetry, errors, and deep-link navigation</p>
+          </div>
+          <div class="stat">
+            <div class="num">AA</div>
+            <p>Accessibility baseline for reusable UI patterns and testing</p>
+          </div>
+          <div class="stat">
+            <div class="num">Safe</div>
+            <p>Feature flags, canary rollout, contract tests, and instant rollback</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="overview" class="wrap section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Overview</div>
+          <h2>What this platform solves</h2>
+        </div>
+        <p>
+          As the product footprint grew, teams needed a way to ship independently without fragmenting state, event semantics,
+          quality standards, or user experience. The solution was a frontend platform that made distributed teams feel coordinated.
+        </p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Team challenge</h3>
+          <p>Independent micro-app teams were moving quickly, but duplication in state handling, event contracts, and UI patterns increased complexity.</p>
+        </article>
+        <article class="card">
+          <h3>Platform response</h3>
+          <p>A shared state layer, typed event hub, common integration patterns, and versioned design system reduced coupling while improving consistency.</p>
+        </article>
+        <article class="card">
+          <h3>Why it matters</h3>
+          <p>New features could be launched with less risk, better observability, and a smoother user journey across independently deployed applications.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="architecture" class="wrap section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Architecture</div>
+          <h2>System architecture at a glance</h2>
+        </div>
+        <p>
+          The shell hosts multiple micro-apps, while a shared state store and typed event bus coordinate application behavior.
+          External account-provider flows are isolated behind backend services and reliability controls.
+        </p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>System context</h3>
+<pre>flowchart LR
+    U[User] --> S[Shell Application]
+    S --> A[Micro App A]
+    S --> B[Micro App B]
+    S --> C[Micro App C]
+
+    S --> ST[Shared State Store]
+    A --> ST
+    B --> ST
+    C --> ST
+
+    S --> EH[Event Hub]
+    A --> EH
+    B --> EH
+    C --> EH
+
+    EH --> T[Telemetry Pipeline]
+    EH --> ER[Error Pipeline]
+    EH --> N[Navigation Pipeline]
+
+    B --> W[Embedded Provider Widget]
+    W --> API[Backend Integration Service]
+    API --> P[External Provider APIs]
+    API --> DB[(Accounts / Holdings / Consents)]</pre>
+        </div>
+        <div class="card">
+          <h3>Runtime architecture</h3>
+<pre>flowchart TD
+    Shell --> State[Central Store]
+    Shell --> Events[Typed Event Hub]
+
+    subgraph Micro Frontends
+      App1[Onboarding App]
+      App2[Linking App]
+      App3[Portfolio App]
+    end
+
+    App1 <--> State
+    App2 <--> State
+    App3 <--> State
+
+    App1 <--> Events
+    App2 <--> Events
+    App3 <--> Events
+
+    Events --> Analytics[Analytics Consumers]
+    Events --> Logging[Error / Audit Consumers]
+    Events --> Router[Navigation Consumers]</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="decisions" class="wrap section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Key decisions</div>
+          <h2>Design choices that shaped the platform</h2>
+        </div>
+        <p>
+          The architecture favors fast onboarding, low duplication, and strong operational control. These were the major decisions behind the design.
+        </p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Centralized UI state</h3>
+          <p>One authoritative store manages initialization, hydration, reads, writes, clears, and subscriptions for the full application lifecycle.</p>
+          <ul>
+            <li>Faster micro-app startup through immediate hydration</li>
+            <li>Reduced redundant local state and shell duplication</li>
+            <li>Cleaner ownership boundaries for shared state</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Reactive updates</h3>
+          <p>Push-based reactivity simplifies change detection and keeps cross-app interactions lightweight and predictable.</p>
+          <ul>
+            <li>Lower cognitive load than manual sync patterns</li>
+            <li>Consistent team adoption through implementation guides</li>
+            <li>Better responsiveness for UI state propagation</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Governed event schema</h3>
+          <p>Names, paths, and typed payloads create a contract that is discoverable, testable, and easier to consume across teams.</p>
+          <ul>
+            <li>Improved observability and debugging</li>
+            <li>Reduced ambiguity for event producers and consumers</li>
+            <li>Safer deep-link and telemetry integrations</li>
+          </ul>
+        </article>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <article class="card">
+          <h3>External provider integration</h3>
+          <p>
+            Third-party account-linking is isolated behind a backend exchange service using short-lived tokens, session binding,
+            callback orchestration, and idempotent persistence for linked entities.
+          </p>
+          <ul>
+            <li>Supports success, error, exit, and recovery flows</li>
+            <li>Handles MFA, consent persistence, and partial-link recovery</li>
+            <li>Protects rollout using feature flags and canary releases</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Shared UI foundation</h3>
+          <p>
+            A versioned component library with token-based theming keeps multiple teams aligned while supporting brand modes,
+            accessible layouts, and migration guidance.
+          </p>
+          <ul>
+            <li>Reusable components reduce UI drift</li>
+            <li>Governance through RFCs, ADRs, and CODEOWNERS</li>
+            <li>Faster delivery with standardized building blocks</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="delivery" class="wrap section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Delivery model</div>
+          <h2>How the platform is built and operated</h2>
+        </div>
+        <p>
+          The engineering story is not only about architecture. It is also about how releases, tests, ownership, and observability were designed for scale.
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="step">
+          <div class="index">1</div>
+          <div>
+            <h3>Define platform contracts</h3>
+            <p>Published schemas for state shape, event names, payload types, routing patterns, and provider callback behavior.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="index">2</div>
+          <div>
+            <h3>Ship reusable foundations</h3>
+            <p>Delivered shared UI packages, theming tokens, testing utilities, migration guides, and onboarding documentation for feature teams.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="index">3</div>
+          <div>
+            <h3>Protect runtime reliability</h3>
+            <p>Added retries, backoff, rate-limit guardrails, circuit breakers, replay support, dead-letter queues, and signed webhook processing.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="index">4</div>
+          <div>
+            <h3>Release safely</h3>
+            <p>Used contract tests, end-to-end flows with mocks, feature flags, canaries, semantic release, and rollback paths for low-risk adoption.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section">
+      <div class="grid-2">
+        <article class="card">
+          <div class="kicker">Quality</div>
+          <h2 style="font-size:1.7rem; margin-bottom:12px;">Testing and observability</h2>
+          <ul>
+            <li>Unit tests for core state, event, and UI primitives</li>
+            <li>End-to-end tests for provider linking and callback flows</li>
+            <li>Contract tests for webhook payloads and event consumers</li>
+            <li>Accessibility checks and visual regression coverage</li>
+            <li>Correlated logs, dashboards, alerts, and release telemetry</li>
+          </ul>
+        </article>
+        <article class="card">
+          <div class="kicker">Security</div>
+          <h2 style="font-size:1.7rem; margin-bottom:12px;">Security and compliance posture</h2>
+          <ul>
+            <li>Least-privilege token exchange and secret rotation</li>
+            <li>Content Security Policy and iframe integration controls</li>
+            <li>PII masking in logs and analytics pipelines</li>
+            <li>SSO/session binding for provider handoff integrity</li>
+            <li>Controlled environment toggles from sandbox to production</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="impact" class="wrap section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Portfolio framing</div>
+          <h2>How to talk about this in interviews</h2>
+        </div>
+        <p>
+          This page is intentionally written to help you present the project as both a system design artifact and a strong resume portfolio case study.
+        </p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Technical leadership angle</h3>
+          <p>Explain how you reduced cross-app coupling by introducing shared state contracts, governed events, and a reusable delivery framework.</p>
+        </article>
+        <article class="card">
+          <h3>Product impact angle</h3>
+          <p>Frame the work around faster delivery, lower UI inconsistency, safer releases, smoother onboarding for teams, and improved user flow continuity.</p>
+        </article>
+        <article class="card">
+          <h3>Operational excellence angle</h3>
+          <p>Highlight rollout safety, observability, contract testing, and resilience patterns that made third-party integration production-ready.</p>
+        </article>
+      </div>
+      <div class="quote" style="margin-top:18px;">
+        A concise interview summary: “I worked on an enterprise micro-frontend platform that standardized shared state, event contracts, design-system adoption,
+        and third-party integration patterns so multiple teams could ship independently without compromising consistency, observability, or release safety.”
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    Generic case study page generated for GitHub or portfolio use. Product- and company-specific names have been removed to keep the project reusable and interview-friendly.
+  </footer>
+</body>
+</html>
