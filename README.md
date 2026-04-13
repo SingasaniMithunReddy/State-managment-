@@ -1,45 +1,28 @@
 # Enterprise Frontend Platform Case Study
 
-A GitHub-ready portfolio project that presents a generic enterprise micro-frontend platform as a product-style landing page and system design case study.
+A GitHub-ready static landing page for an interview and portfolio-friendly enterprise frontend platform case study.
 
-## What this repo includes
+## Files
+- `index.html` — main page
+- `styles.css` — extracted styles for cleaner project structure
 
-- `index.html` — landing page and case study content
-- `styles.css` — responsive styling for the product-style UI
-- `script.js` — small client-side behavior for theme toggle
-- `.github/workflows/static.yml` — simple static site workflow example
-- `LICENSE` — MIT license
+## Use locally
+Open `index.html` in a browser.
+
+## Publish with GitHub Pages
+1. Create a new GitHub repository
+2. Upload these files
+3. Go to **Settings → Pages**
+4. Set the source to the main branch root
+5. Save
 
 ## Project summary
+This project presents a generic enterprise micro-frontend platform case study focused on:
+- centralized state management
+- typed event contracts
+- third-party provider integration
+- reusable UI patterns
+- accessibility and safe rollout patterns
 
-This case study demonstrates how an enterprise frontend platform can support multiple web applications with:
-
-- centralized UI state management
-- reactive cross-app updates
-- a typed event pipeline for analytics, errors, and navigation
-- secure third-party integration patterns
-- design system governance
-- accessibility, observability, and release safety
-
-## Run locally
-
-Because this is a static site, you can open `index.html` directly in a browser.
-
-For a simple local server:
-
-```bash
-python -m http.server 8080
-```
-
-Then open `http://localhost:8080`.
-
-## Publish to GitHub Pages
-
-1. Create a new GitHub repository.
-2. Upload these files.
-3. Enable GitHub Pages for the repository.
-4. Serve from the main branch root or your preferred Pages configuration.
-
-## Positioning
-
-This repo is intentionally generic and portfolio-friendly. It avoids company-specific names and focuses on reusable architecture, engineering judgment, and system design communication.
+## Notes
+This version is generic and portfolio-safe, without company-specific product names.
