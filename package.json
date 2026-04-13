@@ -5,7 +5,9 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "build:prod": "ng build --configuration production",
+    "serve:host": "ng serve --host 0.0.0.0 --port 4200"
   },
   "dependencies": {
     "@angular/animations": "^20.3.0",
@@ -25,5 +27,9 @@
     "@angular/cli": "^20.3.0",
     "@angular/compiler-cli": "^20.3.0",
     "typescript": "~5.8.3"
+  },
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=10.0.0"
   }
 }
