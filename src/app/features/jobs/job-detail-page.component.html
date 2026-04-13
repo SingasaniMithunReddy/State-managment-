@@ -1,0 +1,83 @@
+<section class="section">
+  <div class="container">
+    @if (job(); as currentJob) {
+      <div class="detail-layout">
+        <article class="card detail-main">
+          <div class="detail-hero">
+            <div class="logo">{{ currentJob.logoText }}</div>
+            <div>
+              <p class="muted detail-company">{{ currentJob.company }}</p>
+              <h1>{{ currentJob.title }}</h1>
+              <div class="meta muted">
+                <span>{{ currentJob.location }}</span>
+                <span>•</span>
+                <span>{{ currentJob.remoteMode }}</span>
+                <span>•</span>
+                <span>{{ currentJob.employmentType }}</span>
+                <span>•</span>
+                <span>{{ currentJob.level }}</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="lead">{{ currentJob.description }}</p>
+
+          <div class="chip-row">
+            @for (tag of currentJob.tags; track tag) {
+              <span class="chip">{{ tag }}</span>
+            }
+          </div>
+
+          <section>
+            <h2>Responsibilities</h2>
+            <ul>
+              @for (item of currentJob.responsibilities; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </section>
+
+          <section>
+            <h2>Requirements</h2>
+            <ul>
+              @for (item of currentJob.requirements; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </section>
+
+          <section>
+            <h2>Perks</h2>
+            <ul>
+              @for (item of currentJob.perks; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </section>
+        </article>
+
+        <aside class="card detail-side">
+          <div class="salary-card">
+            <p class="muted">Compensation</p>
+            <div class="salary">{{ currentJob.salaryRange }}</div>
+            <p class="muted">Posted {{ currentJob.postedAt }}</p>
+          </div>
+
+          <button class="btn btn-primary full" type="button" (click)="apply()">
+            {{ applications.hasApplied(currentJob.id) ? 'Already applied' : 'Apply now' }}
+          </button>
+          <button class="btn btn-secondary full" type="button" (click)="toggleSaved()">
+            {{ savedJobs.isSaved(currentJob.id) ? 'Remove from saved' : 'Save for later' }}
+          </button>
+          <a class="btn btn-ghost full" routerLink="/jobs">Back to all jobs</a>
+        </aside>
+      </div>
+    } @else {
+      <div class="card empty-state">
+        <h2>Job not found</h2>
+        <p class="muted">This job may have been removed from the mock dataset.</p>
+        <a class="btn btn-primary" routerLink="/jobs">Return to jobs</a>
+      </div>
+    }
+  </div>
+</section>

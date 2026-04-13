@@ -1,0 +1,65 @@
+<section class="section">
+  <div class="container page-head">
+    <div>
+      <span class="badge">Dashboard</span>
+      <h1 class="section-title">A clean starting point for recruiter or candidate analytics.</h1>
+      <p class="section-copy">
+        The dashboard uses computed signals and local interactions to show how your portal could feel
+        before a backend is connected.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section dashboard-section">
+  <div class="container grid summary-grid">
+    @for (card of summaryCards(); track card.label) {
+      <article class="card summary-card">
+        <div class="kpi-value">{{ card.value }}</div>
+        <div class="kpi-label">{{ card.label }}</div>
+      </article>
+    }
+  </div>
+
+  <div class="container dashboard-layout">
+    <section class="card panel">
+      <div class="panel-head">
+        <h2>Pipeline snapshot</h2>
+        <a routerLink="/applications">View applications</a>
+      </div>
+
+      <div class="pipeline-list">
+        @for (item of pipeline(); track item.label) {
+          <div class="pipeline-item">
+            <div class="pipeline-label-row">
+              <span>{{ item.label }}</span>
+              <strong>{{ item.value }}</strong>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" [style.width.%]="(item.value / maxPipeline()) * 100"></div>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="card panel">
+      <div class="panel-head">
+        <h2>Recent roles</h2>
+        <a routerLink="/jobs">All jobs</a>
+      </div>
+
+      <div class="recent-list">
+        @for (job of recentJobs(); track job.id) {
+          <a class="recent-item" [routerLink]="['/jobs', job.id]">
+            <div>
+              <strong>{{ job.title }}</strong>
+              <p class="muted">{{ job.company }} • {{ job.location }}</p>
+            </div>
+            <span>{{ job.salaryRange }}</span>
+          </a>
+        }
+      </div>
+    </section>
+  </div>
+</section>

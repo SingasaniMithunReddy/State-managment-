@@ -1,0 +1,37 @@
+.tracker-section {
+  padding-top: 0;
+}
+
+.tracker-grid {
+  grid-template-columns: 1fr;
+}
+
+.tracker-card {
+  padding: 1.3rem;
+}
+
+.tracker-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: start;
+}
+
+.company {
+  margin: 0 0 0.25rem;
+}
+
+h3 {
+  margin: 0;
+}
+
+.tracker-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}

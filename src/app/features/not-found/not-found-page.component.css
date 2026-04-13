@@ -1,0 +1,16 @@
+.not-found-wrap {
+  min-height: 60vh;
+  display: grid;
+  align-items: center;
+}
+
+.center {
+  display: grid;
+  place-items: center;
+}
+
+.not-found-card {
+  width: min(520px, 100%);
+  text-align: center;
+  padding: 1.5rem;
+}

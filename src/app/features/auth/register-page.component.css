@@ -1,0 +1,39 @@
+.auth-wrap {
+  min-height: 65vh;
+  display: grid;
+  align-items: center;
+}
+
+.auth-container {
+  display: grid;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(560px, 100%);
+  padding: 1.5rem;
+}
+
+.auth-card h1 {
+  margin: 1rem 0 0.35rem;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.full {
+  width: 100%;
+}
+
+.notice {
+  margin-top: 1rem;
+  color: #4338ca;
+  font-weight: 700;
+}
+
+.switch-copy {
+  margin-top: 1.2rem;
+}

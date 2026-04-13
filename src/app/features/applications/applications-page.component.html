@@ -1,0 +1,51 @@
+<section class="section">
+  <div class="container page-head">
+    <div>
+      <span class="badge">Application tracker</span>
+      <h1 class="section-title">Manage your progress across roles.</h1>
+      <p class="section-copy">
+        This page is driven by localStorage so you can demo application tracking without any backend.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section tracker-section">
+  <div class="container grid tracker-grid">
+    @if (items().length > 0) {
+      @for (item of items(); track item.application.jobId) {
+        <article class="card tracker-card">
+          <div class="tracker-head">
+            <div>
+              <p class="muted company">{{ item.job!.company }}</p>
+              <h3>{{ item.job!.title }}</h3>
+            </div>
+            <span class="status-pill" [class]="'status-pill ' + statusClass(item.application.status)">
+              {{ item.application.status }}
+            </span>
+          </div>
+
+          <p class="muted">
+            {{ item.job!.location }} • {{ item.job!.remoteMode }} • {{ item.job!.salaryRange }}
+          </p>
+
+          <div class="tracker-actions">
+            <a class="btn btn-secondary" [routerLink]="['/jobs', item.job!.id]">View job</a>
+            <button class="btn btn-primary" type="button" (click)="applications.advance(item.application.jobId)">
+              Advance status
+            </button>
+            <button class="btn btn-ghost" type="button" (click)="applications.remove(item.application.jobId)">
+              Remove
+            </button>
+          </div>
+        </article>
+      }
+    } @else {
+      <div class="card empty-state wide">
+        <h3>No applications yet</h3>
+        <p class="muted">Use Quick apply or Apply now on a job detail page to populate this tracker.</p>
+        <a class="btn btn-primary" routerLink="/jobs">Browse jobs</a>
+      </div>
+    }
+  </div>
+</section>

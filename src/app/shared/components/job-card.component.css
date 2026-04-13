@@ -1,0 +1,114 @@
+.job-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.job-top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.company-mark {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #dbeafe, #eef2ff);
+  color: #312e81;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.company {
+  margin: 0 0 0.25rem;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.featured {
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  background: rgba(5, 150, 105, 0.12);
+  color: #047857;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.meta-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+
+.summary {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+.job-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-top: auto;
+}
+
+.salary {
+  font-weight: 800;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.icon-btn,
+.compact {
+  min-height: 2.5rem;
+}
+
+.icon-btn {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  background: #fff;
+  padding: 0.65rem 0.95rem;
+  font-weight: 700;
+}
+
+.compact {
+  padding: 0.7rem 1rem;
+}
+
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .job-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,137 @@
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="badge">Frontend-only Angular 20 portal</span>
+      <h1>Build a polished hiring experience without backend complexity.</h1>
+      <p>
+        HireJob.ai is a modern recruiting portal demo with jobs, saved lists, application tracking,
+        and employer-facing pages powered by Angular standalone components and local state.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" routerLink="/jobs">Browse jobs</a>
+        <a class="btn btn-secondary" routerLink="/employers">For employers</a>
+        <a class="btn btn-ghost" routerLink="/case-study">View case study</a>
+      </div>
+
+      <div class="stats-grid">
+        @for (stat of stats; track stat.label) {
+          <div class="card stat-card">
+            <div class="kpi-value">{{ stat.value }}</div>
+            <div class="kpi-label">{{ stat.label }}</div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <aside class="hero-panel card">
+      <div class="panel-top">
+        <div>
+          <p class="eyebrow">Live product preview</p>
+          <h2>Angular 20 hiring portal</h2>
+        </div>
+        <span class="pill">No backend</span>
+      </div>
+
+      <div class="panel-metrics">
+        <div>
+          <strong>127</strong>
+          <span>active roles</span>
+        </div>
+        <div>
+          <strong>34</strong>
+          <span>new applications</span>
+        </div>
+        <div>
+          <strong>9</strong>
+          <span>interviews this week</span>
+        </div>
+      </div>
+
+      <div class="pipeline card soft-card">
+        <div class="pipeline-row">
+          <span>Matched</span>
+          <strong>1,284</strong>
+        </div>
+        <div class="pipeline-row">
+          <span>Applied</span>
+          <strong>486</strong>
+        </div>
+        <div class="pipeline-row">
+          <span>Interview</span>
+          <strong>112</strong>
+        </div>
+        <div class="pipeline-row">
+          <span>Offer</span>
+          <strong>27</strong>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container feature-grid">
+    <div>
+      <span class="badge">What this demo includes</span>
+      <h2 class="section-title">A complete starter structure for a job portal.</h2>
+      <p class="section-copy">
+        The project is organized into feature pages, shared components, mock services, and routes so
+        you can extend it into a real product later.
+      </p>
+    </div>
+
+    <div class="grid cards-3">
+      <article class="card feature-card">
+        <h3>Candidate flow</h3>
+        <p class="muted">Browse jobs, save openings, and track applications in the UI.</p>
+      </article>
+      <article class="card feature-card">
+        <h3>Employer marketing</h3>
+        <p class="muted">Showcase plans, features, and value props for hiring teams.</p>
+      </article>
+      <article class="card feature-card">
+        <h3>Dashboard demo</h3>
+        <p class="muted">Present KPIs and pipeline summaries using local mock state.</p>
+      </article>
+      <article class="card feature-card">
+        <h3>Portfolio case study</h3>
+        <p class="muted">Show architecture depth in a polished Angular page built from your uploaded HTML.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section light-section">
+  <div class="container section-head">
+    <div>
+      <span class="badge">Featured openings</span>
+      <h2 class="section-title">Sample roles ready to explore.</h2>
+    </div>
+    <a class="btn btn-secondary" routerLink="/jobs">View all jobs</a>
+  </div>
+
+  <div class="container grid jobs-grid">
+    @for (job of featuredJobs(); track job.id) {
+      <app-job-card [job]="job"></app-job-card>
+    }
+  </div>
+</section>
+
+<section class="section">
+  <div class="container cta card">
+    <div>
+      <span class="badge">Next step</span>
+      <h2 class="section-title">Use this as your Angular 20 foundation.</h2>
+      <p class="section-copy">
+        Connect the services to APIs later, add auth, and wire recruiter workflows without changing
+        the overall app structure.
+      </p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-primary" routerLink="/register">Create account</a>
+      <a class="btn btn-ghost" routerLink="/dashboard">View dashboard</a>
+      <a class="btn btn-secondary" routerLink="/case-study">Open case study</a>
+    </div>
+  </div>
+</section>

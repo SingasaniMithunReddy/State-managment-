@@ -1,0 +1,379 @@
+<section class="case-study-page">
+  <div class="case-study-nav">
+    <div class="container case-study-nav-inner">
+      <div class="case-study-brand">
+        Enterprise Frontend Platform
+        <small>Case study / portfolio page</small>
+      </div>
+      <nav class="case-study-links" aria-label="Case study navigation">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#decisions">Decisions</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#impact">Impact</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class="case-study-hero container">
+    <div class="case-study-hero-grid">
+      <div class="case-study-hero-card">
+        <div class="case-study-eyebrow">Interview-ready system design portfolio</div>
+        <h1>Built a scalable micro-frontend platform for enterprise product teams.</h1>
+        <p class="case-study-lead">
+          This case study presents a production-grade frontend platform centered on centralized state,
+          governed eventing, external-provider integration, reusable UI foundations, and safe release patterns.
+          It is written to feel like a real product landing page while still showing architecture depth for
+          interviews and GitHub portfolios.
+        </p>
+
+        <div class="case-study-pill-row">
+          <span class="case-study-pill">Micro-frontends</span>
+          <span class="case-study-pill">Reactive state</span>
+          <span class="case-study-pill">Typed events</span>
+          <span class="case-study-pill">Provider integration</span>
+          <span class="case-study-pill">Design system</span>
+          <span class="case-study-pill">Accessibility</span>
+        </div>
+
+        <div class="case-study-actions">
+          <a class="btn btn-primary" href="#architecture">View architecture</a>
+          <a class="btn btn-secondary" routerLink="/dashboard">Explore portal dashboard</a>
+        </div>
+      </div>
+
+      <aside class="case-study-stats" aria-label="Key highlights">
+        <div class="case-study-stat">
+          <div class="case-study-num">1</div>
+          <p>Shared application state source of truth across shell and micro-apps</p>
+        </div>
+        <div class="case-study-stat">
+          <div class="case-study-num">3</div>
+          <p>Core event lanes for telemetry, errors, and deep-link navigation</p>
+        </div>
+        <div class="case-study-stat">
+          <div class="case-study-num">AA</div>
+          <p>Accessibility baseline for reusable UI patterns and testing</p>
+        </div>
+        <div class="case-study-stat">
+          <div class="case-study-num">Safe</div>
+          <p>Feature flags, canary rollout, contract tests, and instant rollback</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="overview" class="section">
+    <div class="container">
+      <div class="case-study-section-head">
+        <div>
+          <div class="case-study-kicker">Overview</div>
+          <h2>What this platform solves</h2>
+        </div>
+        <p>
+          As the product footprint grew, teams needed a way to ship independently without fragmenting state,
+          event semantics, quality standards, or user experience. The solution was a frontend platform that made
+          distributed teams feel coordinated.
+        </p>
+      </div>
+
+      <div class="case-study-grid-3">
+        <article class="case-study-card">
+          <h3>Team challenge</h3>
+          <p>
+            Independent micro-app teams were moving quickly, but duplication in state handling, event contracts,
+            and UI patterns increased complexity.
+          </p>
+        </article>
+        <article class="case-study-card">
+          <h3>Platform response</h3>
+          <p>
+            A shared state layer, typed event hub, common integration patterns, and versioned design system reduced
+            coupling while improving consistency.
+          </p>
+        </article>
+        <article class="case-study-card">
+          <h3>Why it matters</h3>
+          <p>
+            New features could be launched with less risk, better observability, and a smoother user journey across
+            independently deployed applications.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture" class="section case-study-surface">
+    <div class="container">
+      <div class="case-study-section-head">
+        <div>
+          <div class="case-study-kicker">Architecture</div>
+          <h2>System architecture at a glance</h2>
+        </div>
+        <p>
+          The shell hosts multiple micro-apps, while a shared state store and typed event bus coordinate application
+          behavior. External account-provider flows are isolated behind backend services and reliability controls.
+        </p>
+      </div>
+
+      <div class="case-study-grid-2">
+        <article class="case-study-card">
+          <h3>System context</h3>
+<pre>flowchart LR
+    U[User] --> S[Shell Application]
+    S --> A[Micro App A]
+    S --> B[Micro App B]
+    S --> C[Micro App C]
+
+    S --> ST[Shared State Store]
+    A --> ST
+    B --> ST
+    C --> ST
+
+    S --> EH[Event Hub]
+    A --> EH
+    B --> EH
+    C --> EH
+
+    EH --> T[Telemetry Pipeline]
+    EH --> ER[Error Pipeline]
+    EH --> N[Navigation Pipeline]
+
+    B --> W[Embedded Provider Widget]
+    W --> API[Backend Integration Service]
+    API --> P[External Provider APIs]
+    API --> DB[(Accounts / Holdings / Consents)]</pre>
+        </article>
+
+        <article class="case-study-card">
+          <h3>Runtime architecture</h3>
+<pre>flowchart TD
+    Shell --> State[Central Store]
+    Shell --> Events[Typed Event Hub]
+
+    subgraph Micro Frontends
+      App1[Onboarding App]
+      App2[Linking App]
+      App3[Portfolio App]
+    end
+
+    App1 &lt;--&gt; State
+    App2 &lt;--&gt; State
+    App3 &lt;--&gt; State
+
+    App1 &lt;--&gt; Events
+    App2 &lt;--&gt; Events
+    App3 &lt;--&gt; Events
+
+    Events --> Analytics[Analytics Consumers]
+    Events --> Logging[Error / Audit Consumers]
+    Events --> Router[Navigation Consumers]</pre>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="decisions" class="section">
+    <div class="container">
+      <div class="case-study-section-head">
+        <div>
+          <div class="case-study-kicker">Key decisions</div>
+          <h2>Design choices that shaped the platform</h2>
+        </div>
+        <p>
+          The architecture favors fast onboarding, low duplication, and strong operational control. These were the major
+          decisions behind the design.
+        </p>
+      </div>
+
+      <div class="case-study-grid-3">
+        <article class="case-study-card">
+          <h3>Centralized UI state</h3>
+          <p>
+            One authoritative store manages initialization, hydration, reads, writes, clears, and subscriptions for the
+            full application lifecycle.
+          </p>
+          <ul>
+            <li>Faster micro-app startup through immediate hydration</li>
+            <li>Reduced redundant local state and shell duplication</li>
+            <li>Cleaner ownership boundaries for shared state</li>
+          </ul>
+        </article>
+        <article class="case-study-card">
+          <h3>Reactive updates</h3>
+          <p>
+            Push-based reactivity simplifies change detection and keeps cross-app interactions lightweight and predictable.
+          </p>
+          <ul>
+            <li>Lower cognitive load than manual sync patterns</li>
+            <li>Consistent team adoption through implementation guides</li>
+            <li>Better responsiveness for UI state propagation</li>
+          </ul>
+        </article>
+        <article class="case-study-card">
+          <h3>Governed event schema</h3>
+          <p>
+            Names, paths, and typed payloads create a contract that is discoverable, testable, and easier to consume across teams.
+          </p>
+          <ul>
+            <li>Improved observability and debugging</li>
+            <li>Reduced ambiguity for event producers and consumers</li>
+            <li>Safer deep-link and telemetry integrations</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="case-study-grid-2 spaced-top">
+        <article class="case-study-card">
+          <h3>External provider integration</h3>
+          <p>
+            Third-party account-linking is isolated behind a backend exchange service using short-lived tokens, session binding,
+            callback orchestration, and idempotent persistence for linked entities.
+          </p>
+          <ul>
+            <li>Supports success, error, exit, and recovery flows</li>
+            <li>Handles MFA, consent persistence, and partial-link recovery</li>
+            <li>Protects rollout using feature flags and canary releases</li>
+          </ul>
+        </article>
+        <article class="case-study-card">
+          <h3>Shared UI foundation</h3>
+          <p>
+            A versioned component library with token-based theming keeps multiple teams aligned while supporting brand modes,
+            accessible layouts, and migration guidance.
+          </p>
+          <ul>
+            <li>Reusable components reduce UI drift</li>
+            <li>Governance through RFCs, ADRs, and CODEOWNERS</li>
+            <li>Faster delivery with standardized building blocks</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="delivery" class="section case-study-surface">
+    <div class="container">
+      <div class="case-study-section-head">
+        <div>
+          <div class="case-study-kicker">Delivery model</div>
+          <h2>How the platform is built and operated</h2>
+        </div>
+        <p>
+          The engineering story is not only about architecture. It is also about how releases, tests, ownership,
+          and observability were designed for scale.
+        </p>
+      </div>
+
+      <div class="case-study-timeline">
+        <div class="case-study-step">
+          <div class="case-study-index">1</div>
+          <div>
+            <h3>Define platform contracts</h3>
+            <p>Published schemas for state shape, event names, payload types, routing patterns, and provider callback behavior.</p>
+          </div>
+        </div>
+        <div class="case-study-step">
+          <div class="case-study-index">2</div>
+          <div>
+            <h3>Ship reusable foundations</h3>
+            <p>Delivered shared UI packages, theming tokens, testing utilities, migration guides, and onboarding documentation for feature teams.</p>
+          </div>
+        </div>
+        <div class="case-study-step">
+          <div class="case-study-index">3</div>
+          <div>
+            <h3>Protect runtime reliability</h3>
+            <p>Added retries, backoff, rate-limit guardrails, circuit breakers, replay support, dead-letter queues, and signed webhook processing.</p>
+          </div>
+        </div>
+        <div class="case-study-step">
+          <div class="case-study-index">4</div>
+          <div>
+            <h3>Release safely</h3>
+            <p>Used contract tests, end-to-end flows with mocks, feature flags, canaries, semantic release, and rollback paths for low-risk adoption.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container case-study-grid-2">
+      <article class="case-study-card">
+        <div class="case-study-kicker">Quality</div>
+        <h2 class="case-study-subtitle">Testing and observability</h2>
+        <ul>
+          <li>Unit tests for core state, event, and UI primitives</li>
+          <li>End-to-end tests for provider linking and callback flows</li>
+          <li>Contract tests for webhook payloads and event consumers</li>
+          <li>Accessibility checks and visual regression coverage</li>
+          <li>Correlated logs, dashboards, alerts, and release telemetry</li>
+        </ul>
+      </article>
+      <article class="case-study-card">
+        <div class="case-study-kicker">Security</div>
+        <h2 class="case-study-subtitle">Security and compliance posture</h2>
+        <ul>
+          <li>Least-privilege token exchange and secret rotation</li>
+          <li>Content Security Policy and iframe integration controls</li>
+          <li>PII masking in logs and analytics pipelines</li>
+          <li>SSO/session binding for provider handoff integrity</li>
+          <li>Controlled environment toggles from sandbox to production</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="impact" class="section">
+    <div class="container">
+      <div class="case-study-section-head">
+        <div>
+          <div class="case-study-kicker">Portfolio framing</div>
+          <h2>How to talk about this in interviews</h2>
+        </div>
+        <p>
+          This page is intentionally written to help you present the project as both a system design artifact and a strong
+          resume portfolio case study.
+        </p>
+      </div>
+
+      <div class="case-study-grid-3">
+        <article class="case-study-card">
+          <h3>Technical leadership angle</h3>
+          <p>Explain how you reduced cross-app coupling by introducing shared state contracts, governed events, and a reusable delivery framework.</p>
+        </article>
+        <article class="case-study-card">
+          <h3>Product impact angle</h3>
+          <p>Frame the work around faster delivery, lower UI inconsistency, safer releases, smoother onboarding for teams, and improved user flow continuity.</p>
+        </article>
+        <article class="case-study-card">
+          <h3>Operational excellence angle</h3>
+          <p>Highlight rollout safety, observability, contract testing, and resilience patterns that made third-party integration production-ready.</p>
+        </article>
+      </div>
+
+      <div class="case-study-quote spaced-top">
+        A concise interview summary: “I worked on an enterprise micro-frontend platform that standardized shared state,
+        event contracts, design-system adoption, and third-party integration patterns so multiple teams could ship independently
+        without compromising consistency, observability, or release safety.”
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-study-bottom-cta">
+    <div class="container case-study-bottom-card">
+      <div>
+        <div class="case-study-kicker">Added to the Angular portal</div>
+        <h2 class="case-study-subtitle">This page now lives inside the app as a portfolio-style route.</h2>
+        <p>
+          Use it as a showcase page alongside the job portal screens, or adapt it into a recruiter-facing architecture page later.
+        </p>
+      </div>
+      <div class="case-study-actions">
+        <a class="btn btn-primary" routerLink="/jobs">Browse jobs</a>
+        <a class="btn btn-secondary" routerLink="/employers">Employer page</a>
+      </div>
+    </div>
+  </section>
+</section>

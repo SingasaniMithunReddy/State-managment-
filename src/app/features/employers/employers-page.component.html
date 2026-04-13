@@ -1,0 +1,50 @@
+<section class="section employer-hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="badge">For employers</span>
+      <h1 class="section-title">Showcase your hiring product with a credible employer experience.</h1>
+      <p class="section-copy">
+        This page gives your portal a market-ready feel with feature highlights, pricing cards, and
+        clear conversion paths.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" routerLink="/register">Start free</a>
+        <a class="btn btn-secondary" routerLink="/dashboard">See dashboard</a>
+      </div>
+    </div>
+
+    <div class="card feature-panel">
+      <h2>Why teams use HireJob.ai</h2>
+      <ul>
+        <li>Centralized role management</li>
+        <li>Candidate-friendly application journeys</li>
+        <li>Simple recruiter dashboard patterns</li>
+        <li>Ready-to-extend Angular architecture</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container pricing-head">
+    <div>
+      <span class="badge">Plans</span>
+      <h2 class="section-title">Sample pricing cards for the employer side.</h2>
+    </div>
+  </div>
+
+  <div class="container grid pricing-grid">
+    @for (plan of plans; track plan.name) {
+      <article class="card pricing-card">
+        <h3>{{ plan.name }}</h3>
+        <div class="price">{{ plan.price }}</div>
+        <ul>
+          @for (item of plan.items; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+        <a class="btn btn-primary full" routerLink="/register">Choose {{ plan.name }}</a>
+      </article>
+    }
+  </div>
+</section>

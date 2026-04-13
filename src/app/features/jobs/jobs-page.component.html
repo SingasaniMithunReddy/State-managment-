@@ -1,0 +1,83 @@
+<section class="section page-top">
+  <div class="container page-head">
+    <div>
+      <span class="badge">Jobs marketplace</span>
+      <h1 class="section-title">Discover roles that fit your next move.</h1>
+      <p class="section-copy">
+        Client-side filters are powered by Angular signals and mock data so you can extend the page
+        into a real search experience later.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section filters-wrap">
+  <div class="container card filters-card">
+    <div class="filters-grid">
+      <div class="form-field search-field">
+        <label for="jobSearch">Search</label>
+        <input
+          id="jobSearch"
+          class="input"
+          type="text"
+          [value]="search()"
+          placeholder="Search title, company, or skill"
+          (input)="updateSearch(($any($event.target)).value)"
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="employmentType">Employment type</label>
+        <select
+          id="employmentType"
+          class="select"
+          [value]="selectedType()"
+          (change)="updateType(($any($event.target)).value)"
+        >
+          <option>All</option>
+          <option>Full-time</option>
+          <option>Part-time</option>
+          <option>Contract</option>
+          <option>Internship</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="location">Location</label>
+        <select
+          id="location"
+          class="select"
+          [value]="selectedLocation()"
+          (change)="updateLocation(($any($event.target)).value)"
+        >
+          @for (location of locations(); track location) {
+            <option>{{ location }}</option>
+          }
+        </select>
+      </div>
+
+      <button class="btn btn-secondary remote-toggle" type="button" (click)="toggleRemoteOnly()">
+        {{ remoteOnly() ? 'Showing remote only' : 'Remote only' }}
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section jobs-section">
+  <div class="container result-head">
+    <p class="muted">{{ filteredJobs().length }} roles found</p>
+  </div>
+
+  <div class="container grid jobs-grid">
+    @if (filteredJobs().length > 0) {
+      @for (job of filteredJobs(); track job.id) {
+        <app-job-card [job]="job"></app-job-card>
+      }
+    } @else {
+      <div class="card empty-state">
+        <h3>No matching jobs found</h3>
+        <p class="muted">Try a broader keyword or remove one of the filters.</p>
+      </div>
+    }
+  </div>
+</section>

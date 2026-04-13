@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="container page-head">
+    <div>
+      <span class="badge">Saved jobs</span>
+      <h1 class="section-title">Keep track of opportunities you want to revisit.</h1>
+      <p class="section-copy">
+        Saved jobs persist in localStorage so the state remains available in the browser.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section saved-section">
+  <div class="container grid jobs-grid">
+    @if (savedJobs().length > 0) {
+      @for (job of savedJobs(); track job.id) {
+        <app-job-card [job]="job"></app-job-card>
+      }
+    } @else {
+      <div class="card empty-state wide">
+        <h3>No saved jobs yet</h3>
+        <p class="muted">Browse roles and click Save to build your shortlist.</p>
+        <a class="btn btn-primary" routerLink="/jobs">Explore jobs</a>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,83 @@
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 0.7fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.detail-main,
+.detail-side {
+  padding: 1.5rem;
+}
+
+.detail-hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.logo {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #dbeafe, #eef2ff);
+  color: #312e81;
+  font-weight: 800;
+}
+
+h1 {
+  margin: 0.15rem 0 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.detail-company,
+.meta {
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+}
+
+.lead {
+  color: var(--text-soft);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+section {
+  margin-top: 2rem;
+}
+
+ul {
+  padding-left: 1.2rem;
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+
+.salary-card {
+  padding: 1rem 0 0.4rem;
+}
+
+.salary {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.full {
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 960px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+}

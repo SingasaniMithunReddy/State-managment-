@@ -1,0 +1,46 @@
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+
+.feature-panel,
+.pricing-card {
+  padding: 1.4rem;
+}
+
+.feature-panel ul,
+.pricing-card ul {
+  padding-left: 1.1rem;
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+
+.pricing-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.full {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+@media (max-width: 960px) {
+  .hero-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}

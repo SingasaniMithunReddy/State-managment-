@@ -1,0 +1,57 @@
+<article class="job-card card">
+  <div class="job-top">
+    <div class="company-mark">{{ job().logoText }}</div>
+    <div>
+      <p class="company">{{ job().company }}</p>
+      <h3>{{ job().title }}</h3>
+    </div>
+    @if (job().featured) {
+      <span class="featured">Featured</span>
+    }
+  </div>
+
+  <div class="meta-row muted">
+    <span>{{ job().location }}</span>
+    <span>•</span>
+    <span>{{ job().remoteMode }}</span>
+    <span>•</span>
+    <span>{{ job().employmentType }}</span>
+  </div>
+
+  <p class="summary">{{ job().description }}</p>
+
+  <div class="chip-row">
+    @for (tag of job().tags; track tag) {
+      <span class="chip">{{ tag }}</span>
+    }
+  </div>
+
+  <div class="job-bottom">
+    <div>
+      <div class="salary">{{ job().salaryRange }}</div>
+      <div class="muted small">{{ job().postedAt }}</div>
+    </div>
+
+    <div class="actions">
+      <button
+        class="icon-btn"
+        type="button"
+        (click)="toggleSaved($event)"
+        [attr.aria-pressed]="savedJobs.isSaved(job().id)"
+      >
+        {{ savedJobs.isSaved(job().id) ? 'Saved' : 'Save' }}
+      </button>
+
+      <button
+        class="btn btn-secondary compact"
+        type="button"
+        [disabled]="applications.hasApplied(job().id)"
+        (click)="quickApply($event)"
+      >
+        {{ applications.hasApplied(job().id) ? 'Applied' : 'Quick apply' }}
+      </button>
+
+      <a class="btn btn-primary compact" [routerLink]="['/jobs', job().id]">View</a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,41 @@
+<section class="section auth-wrap">
+  <div class="container auth-container">
+    <article class="card auth-card">
+      <span class="badge">Register</span>
+      <h1>Create your HireJob.ai account</h1>
+      <p class="muted">Use this page as the base for candidate or employer onboarding.</p>
+
+      <form class="auth-form" (submit)="$event.preventDefault(); submit()">
+        <div class="form-field">
+          <label for="fullName">Full name</label>
+          <input id="fullName" class="input" type="text" placeholder="Your name">
+        </div>
+
+        <div class="form-field">
+          <label for="workEmail">Work email</label>
+          <input id="workEmail" class="input" type="email" placeholder="team@company.com">
+        </div>
+
+        <div class="form-field">
+          <label for="role">I am joining as</label>
+          <select id="role" class="select">
+            <option>Candidate</option>
+            <option>Employer</option>
+            <option>Recruiter</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary full" type="submit">Create account</button>
+      </form>
+
+      @if (submitted()) {
+        <p class="notice">Frontend demo only: wire this up to your signup API or auth provider.</p>
+      }
+
+      <p class="muted switch-copy">
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </p>
+    </article>
+  </div>
+</section>

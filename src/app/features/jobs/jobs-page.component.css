@@ -1,0 +1,41 @@
+.page-top {
+  padding-bottom: 1rem;
+}
+
+.filters-wrap {
+  padding-top: 0;
+}
+
+.filters-card {
+  padding: 1.25rem;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+}
+
+.search-field {
+  min-width: 0;
+}
+
+.remote-toggle {
+  min-height: 3rem;
+}
+
+.result-head {
+  margin-bottom: 1rem;
+}
+
+.jobs-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 1024px) {
+  .filters-grid,
+  .jobs-grid {
+    grid-template-columns: 1fr;
+  }
+}
